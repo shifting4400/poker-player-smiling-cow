@@ -63,7 +63,7 @@ class Player:
             if (thighest_card_count > 3 or self.flush(tcards) or 
                 self.straight(tcards) or self.full_house(tcounter)):
 
-                if (cards[0]['rank'] in range(10, 15) or cards[1]['rank'] in range(10, 15)):
+                if (player['hole_cards'][0]['rank'] in range(10, 15) or player['hole_cards'][1]['rank'] in range(10, 15)):
 
                     return self.min_bet(game_state, player, 20)
 
