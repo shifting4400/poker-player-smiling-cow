@@ -13,9 +13,16 @@ class Player:
             for card in cards:
                 counter[card['rank']] += 1
 
+            highest_card_count = 1
+
             for i in range(2, 10) + ['J', 'K', 'Q', 'A']:
-                if counter[str(i)] > 1:
-                    return 1200
+                if counter[str(i)] > highest_card_count:
+                    highest_card_count = counter[str(i)]
+                    
+            if highest_card_count == 2:
+                return game_state["current_buy_in"] - player['bet'] + game_state['minimum_raise']
+            elif highest_card_count > 2:
+                return 1500
 
         except:
             return 0
