@@ -36,6 +36,11 @@ class Player:
             elif highest_card_count > 2 or self.flush(cards) or self.straight(cards):
                 return 1500
 
+            if len(game_state['community_cards']) == 0 and (cards[0]['rank'] in range(10, 15)
+                    or cards[1]['rank'] in range(10, 15)):
+
+                return self.min_bet(game_state, player)
+
         except Exception as e:
             print('Fatal error')
             print(str(e))
