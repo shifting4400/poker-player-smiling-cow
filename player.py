@@ -37,15 +37,17 @@ class Player:
                     
             if highest_card_count == 2:
                 return self.min_bet(game_state, player, 150)
+            elif highest_card_count == 3:
+                return self.min_bet(game_state, player, 800)
             elif highest_card_count > 2 or self.flush(cards) or self.straight(cards):
                 return 1500
 
             if len(game_state['community_cards']) == 0 and (cards[0]['rank'] in range(10, 15)
-                    or cards[1]['rank'] in range(10, 15)):
+                    and cards[1]['rank'] in range(10, 15)):
 
                 #if player['bet'] == 2 * small_blind:
 
-                return self.min_bet(game_state, player, 50)
+                return self.min_bet(game_state, player, 20)
 
         except Exception as e:
             print('Fatal error')
