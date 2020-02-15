@@ -58,7 +58,7 @@ class Player:
         for card in cards:
             suits[card['suit']] += 1
 
-        for suit, count in suits:
+        for suit, count in suits.items():
             if count > 4:
                 return True
 
