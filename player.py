@@ -3,11 +3,15 @@ import collections
 class Player:
     VERSION = "Default Python folding player"
 
-    def min_bet(self, game_state, player):
-        try:
-            return game_state["current_buy_in"] - player['bet'] + game_state['minimum_raise']
-        except:
-            return 100
+    def min_bet(self, game_state, player, extra):
+        mr = 0
+        if 'minimum_raise' in game_state:
+            mr = game_state['minimum_raise']
+
+        if extra > mr:
+            mr = extra
+
+        return game_state["current_buy_in"] - player['bet'] + mr
 
     def betRequest(self, game_state):
         try:
@@ -32,14 +36,16 @@ class Player:
                     highest_card_count = count
                     
             if highest_card_count == 2:
-                return self.min_bet(game_state, player)
+                return self.min_bet(game_state, player, 150)
             elif highest_card_count > 2 or self.flush(cards) or self.straight(cards):
                 return 1500
 
             if len(game_state['community_cards']) == 0 and (cards[0]['rank'] in range(10, 15)
                     or cards[1]['rank'] in range(10, 15)):
 
-                return self.min_bet(game_state, player)
+                #if player['bet'] == 2 * small_blind:
+
+                return self.min_bet(game_state, player, 50)
 
         except Exception as e:
             print('Fatal error')
