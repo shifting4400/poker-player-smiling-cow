@@ -36,9 +36,15 @@ class Player:
                     highest_card_count = count
                     
             if highest_card_count == 2:
+                if self.two_pairs(counter):
+                    return self.min_bet(game_state, player, 250)
+
                 return self.min_bet(game_state, player, 150)
             elif highest_card_count == 3:
-                return self.min_bet(game_state, player, 800)
+                if self.full_house(counter):
+                    return self.min_bet(game_state, player, 800)
+
+                return self.min_bet(game_state, player, 400)
             elif highest_card_count > 2 or self.flush(cards) or self.straight(cards):
                 return 1500
 
@@ -91,3 +97,20 @@ class Player:
 
         return False
 
+    def full_house(self, counter):
+
+        for rank1, count1 in counter.items():
+            for rank2, count2 in counter.items():
+                if rank1 != rank2 and count1 > 2 and count2 > 1:
+                    return True
+
+        return False
+
+    def two_pairs(self, counter):
+
+        for rank1, count1 in counter.items():
+            for rank2, count2 in counter.items():
+                if rank1 != rank2 and count1 > 1 and count2 > 1:
+                    return True
+
+        return False
