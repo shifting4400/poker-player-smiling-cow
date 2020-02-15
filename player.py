@@ -32,7 +32,7 @@ class Player:
                     highest_card_count = count
                     
             if highest_card_count == 2:
-                return min_bet(game_state, player)
+                return self.min_bet(game_state, player)
             elif highest_card_count > 2 or self.flush(cards) or self.straight(cards):
                 return 1500
 
