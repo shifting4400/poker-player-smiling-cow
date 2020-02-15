@@ -16,9 +16,21 @@ class Player:
     def betRequest(self, game_state):
         try:
             player = game_state['players'][game_state['in_action']]
-            cards = player['hole_cards']
-            cards += game_state['community_cards']
+            tcards = game_state['community_cards']
+            cards = player['hole_cards'] + tcards
+            
+            cards.sort(key=lambda x: x['rank'])
+            tcards.sort(key=lambda x: x['rank'])
 
+            tcounter = collections.Counter()
+            for card in tcards:
+                if card['rank'] in ['J', 'K', 'Q', 'A']:
+                    card['rank'] = {'J': 11, 'Q': 12, 'K': 13, 'A': 14}[card['rank']]
+                else:
+                    card['rank'] = int(card['rank'])
+                tcounter[card['rank']] += 1
+            thighest_card_count = 1
+            
             counter = collections.Counter()
             for card in cards:
                 if card['rank'] in ['J', 'K', 'Q', 'A']:
@@ -26,27 +38,27 @@ class Player:
                 else:
                     card['rank'] = int(card['rank'])
                 counter[card['rank']] += 1
-            
-            cards.sort(key=lambda x: x['rank'])
-
             highest_card_count = 1
+
+            for rank, count in tcounter.items():
+                if count > thighest_card_count:
+                    thighest_card_count = count
 
             for rank, count in counter.items():
                 if count > highest_card_count:
                     highest_card_count = count
                     
-            if highest_card_count == 2:
-                if self.two_pairs(counter):
-                    return self.min_bet(game_state, player, 250)
-
+            if (highest_card_count > 3 or (self.flush(cards) and not self.flush(tcards)) or 
+                (self.straight(cards) and not self.straight(tcards))):
+                return self.min_bet(game_state, player, 2000)
+            if self.full_house(counter) and not self.full_house(tcounter):
+                return self.min_bet(game_state, player, 2000)
+            if highest_card_count == 3 and highest_card_count < 3:
+                return self.min_bet(game_state, player, 500)
+            if self.two_pairs(counter) and not self.two_pairs(tcounter):
+                return self.min_bet(game_state, player, 250)
+            if highest_card_count == 2 and thighest_card_count < 2:
                 return self.min_bet(game_state, player, 150)
-            elif highest_card_count == 3:
-                if self.full_house(counter):
-                    return self.min_bet(game_state, player, 800)
-
-                return self.min_bet(game_state, player, 400)
-            elif highest_card_count > 2 or self.flush(cards) or self.straight(cards):
-                return 1500
 
             if len(game_state['community_cards']) == 0 and (cards[0]['rank'] in range(10, 15)
                     and cards[1]['rank'] in range(10, 15)):
