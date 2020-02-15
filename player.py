@@ -53,7 +53,7 @@ class Player:
                 return self.min_bet(game_state, player, 2000)
             if self.full_house(counter) and not self.full_house(tcounter):
                 return self.min_bet(game_state, player, 2000)
-            if highest_card_count == 3 and highest_card_count < 3:
+            if highest_card_count == 3 and thighest_card_count < 3:
                 return self.min_bet(game_state, player, 500)
             if self.two_pairs(counter) and not self.two_pairs(tcounter):
                 return self.min_bet(game_state, player, 250)
