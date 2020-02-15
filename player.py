@@ -30,7 +30,9 @@ class Player:
             elif highest_card_count > 2 or self.flush(cards) or self.straight(cards):
                 return 1500
 
-        except:
+        except Exception as e:
+            print('Fatal error')
+            print(str(e))
             return 0
 
         return 0
