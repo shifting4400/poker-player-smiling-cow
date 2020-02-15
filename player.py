@@ -60,15 +60,15 @@ class Player:
             if highest_card_count == 2 and thighest_card_count < 2:
                 return self.min_bet(game_state, player, 150)
 
-            if (thighest_card_count > 3 or self.flush(tcards) or 
+            if (thighest_card_count >= 3 or self.flush(tcards) or 
                 self.straight(tcards) or self.full_house(tcounter)):
 
                 if (player['hole_cards'][0]['rank'] in range(10, 15) or player['hole_cards'][1]['rank'] in range(10, 15)):
 
                     return self.min_bet(game_state, player, 20)
 
-            if len(game_state['community_cards']) == 0 and (cards[0]['rank'] in range(10, 15)
-                    and cards[1]['rank'] in range(10, 15)):
+            if len(game_state['community_cards']) == 0 and (player['hole_cards'][0]['rank'] in range(10, 15)
+                    and player['hole_cards'][1]['rank'] in range(10, 15)):
 
                 #if player['bet'] == 2 * small_blind:
 
