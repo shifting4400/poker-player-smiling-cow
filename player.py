@@ -52,6 +52,9 @@ class Player:
         if len(ranks) < 5:
             return False
 
+        if 14 in ranks and 2 in ranks and 3 in ranks and 4 in ranks and 5 in ranks:
+            return True
+
         for rank in ranks:
             if rank + 1 in ranks and rank + 2 in ranks and rank + 3 in ranks and rank + 4 in ranks:
                 return True
