@@ -49,8 +49,8 @@ class Player:
 
                 return self.min_bet(game_state, player, 20)
 
-            if len(game_state['community_cards']) == 5 and game_state["current_buy_in"] - player['bet'] == 0
-                and game_state['in_action'] == game_state['dealer']:
+            if (len(game_state['community_cards']) == 5 and game_state["current_buy_in"] - player['bet'] == 0
+                and game_state['in_action'] == game_state['dealer']):
 
                 return self.min_bet(game_state, player, 1)
 
