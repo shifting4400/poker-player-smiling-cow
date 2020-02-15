@@ -8,9 +8,11 @@ class Player:
         if 'minimum_raise' in game_state:
             mr = game_state['minimum_raise']
 
+        extra = int((player['bet'] + player['stack']) / 100 * extra)
+
         if extra > mr:
             mr = extra
-
+            
         return game_state["current_buy_in"] - player['bet'] + mr
 
     def betRequest(self, game_state):
@@ -50,29 +52,29 @@ class Player:
                     
             if (highest_card_count > 3 or (self.flush(cards) and not self.flush(tcards)) or 
                 (self.straight(cards) and not self.straight(tcards))):
-                return self.min_bet(game_state, player, 2000)
+                return self.min_bet(game_state, player, 100)
             if self.full_house(counter) and not self.full_house(tcounter):
-                return self.min_bet(game_state, player, 2000)
+                return self.min_bet(game_state, player, 100)
             if highest_card_count == 3 and thighest_card_count < 3:
-                return self.min_bet(game_state, player, 500)
+                return self.min_bet(game_state, player, 50)
             if self.two_pairs(counter) and not self.two_pairs(tcounter):
-                return self.min_bet(game_state, player, 250)
+                return self.min_bet(game_state, player, 25)
             if highest_card_count == 2 and thighest_card_count < 2:
-                return self.min_bet(game_state, player, 150)
+                return self.min_bet(game_state, player, 15)
 
             if (thighest_card_count >= 3 or self.flush(tcards) or 
                 self.straight(tcards) or self.full_house(tcounter)):
 
                 if (player['hole_cards'][0]['rank'] in range(10, 15) or player['hole_cards'][1]['rank'] in range(10, 15)):
 
-                    return self.min_bet(game_state, player, 20)
+                    return self.min_bet(game_state, player, 2)
 
             if len(game_state['community_cards']) == 0 and (player['hole_cards'][0]['rank'] in range(10, 15)
                     and player['hole_cards'][1]['rank'] in range(10, 15)):
 
                 #if player['bet'] == 2 * small_blind:
 
-                return self.min_bet(game_state, player, 20)
+                return self.min_bet(game_state, player, 2)
 
             if (len(game_state['community_cards']) == 5 and game_state["current_buy_in"] - player['bet'] == 0
                 and game_state['in_action'] == game_state['dealer'] and (player['hole_cards'][0]['rank'] in range(10, 15)
