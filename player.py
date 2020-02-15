@@ -27,7 +27,7 @@ class Player:
                     
             if highest_card_count == 2:
                 return game_state["current_buy_in"] - player['bet'] + game_state['minimum_raise']
-            elif highest_card_count > 2:
+            elif highest_card_count > 2 or flush(cards):
                 return 1500
 
         except:
@@ -44,5 +44,18 @@ class Player:
         if len(ranks) < 5:
             return False
 
+
         return True
+    
+    def flush(self, cards):
+        suits = collections.Counter()
+
+        for card in cards:
+            suits[card['suit']] += 1
+
+        for suit, count in suits:
+            if count > 4:
+                return True
+
+        return False
 
