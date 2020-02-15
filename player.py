@@ -5,9 +5,9 @@ class Player:
 
     def betRequest(self, game_state):
         try:
-            player = game_state['players'][int(game_state['in_action'])]
+            player = game_state['players'][game_state['in_action']]
             cards = player['hole_cards']
-            cards += player['community_cards']
+            cards += game_state['community_cards']
 
             counter = collections.Counter()
             for card in cards:
@@ -46,10 +46,9 @@ class Player:
         if len(ranks) < 5:
             return False
 
-        for i in range(1, len(ranks) - 3):
-            for rank in ranks:
-                if rank + 1 in ranks and rank + 2 in ranks and rank + 3 in ranks and rank + 4 in ranks:
-                    return True
+        for rank in ranks:
+            if rank + 1 in ranks and rank + 2 in ranks and rank + 3 in ranks and rank + 4 in ranks:
+                return True
 
         return False
     
