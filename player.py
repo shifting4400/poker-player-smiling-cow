@@ -5,7 +5,7 @@ class Player:
 
     def betRequest(self, game_state):
         try:
-            player = game_state['players'][game_state['in_action']]
+            player = game_state['players'][int(game_state['in_action'])]
             cards = player['hole_cards']
             cards += player['community_cards']
 
