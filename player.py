@@ -69,6 +69,12 @@ class Player:
 
                     return self.min_bet(game_state, player, 2)
 
+            if len(game_state['community_cards']) == 3 and self.almost_flush(cards) and self.dual_color(player['hole_cards']):
+                return self.min_bet(game_state, player, 30)
+
+            if len(game_state['community_cards']) == 4 and self.almost_flush(cards) and self.dual_color(player['hole_cards']):
+                return self.min_bet(game_state, player, 10)
+
             if len(game_state['community_cards']) == 0 and ((player['hole_cards'][0]['rank'] in range(10, 15)
                     and player['hole_cards'][1]['rank'] in range(10, 15)) or 
                     (player['hole_cards'][0]['rank'] in range(10, 15)
@@ -106,6 +112,30 @@ class Player:
 
         for rank in ranks:
             if rank + 1 in ranks and rank + 2 in ranks and rank + 3 in ranks and rank + 4 in ranks:
+                return True
+
+        return False
+    
+    def dual_color(self, cards):
+        suits = collections.Counter()
+
+        for card in cards:
+            suits[card['suit']] += 1
+
+        for suit, count in suits.items():
+            if count >= 2:
+                return True
+
+        return False
+    
+    def almost_flush(self, cards):
+        suits = collections.Counter()
+
+        for card in cards:
+            suits[card['suit']] += 1
+
+        for suit, count in suits.items():
+            if count > 3:
                 return True
 
         return False
