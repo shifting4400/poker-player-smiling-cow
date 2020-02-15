@@ -69,8 +69,11 @@ class Player:
 
                     return self.min_bet(game_state, player, 2)
 
-            if len(game_state['community_cards']) == 0 and (player['hole_cards'][0]['rank'] in range(10, 15)
-                    and player['hole_cards'][1]['rank'] in range(10, 15)):
+            if len(game_state['community_cards']) == 0 and ((player['hole_cards'][0]['rank'] in range(10, 15)
+                    and player['hole_cards'][1]['rank'] in range(10, 15)) or 
+                    (player['hole_cards'][0]['rank'] in range(10, 15)
+                    or player['hole_cards'][1]['rank'] in range(10, 15)) and
+                    game_state["current_buy_in"] - player['bet'] <= game_state["small_blind"]):
 
                 #if player['bet'] == 2 * small_blind:
 
