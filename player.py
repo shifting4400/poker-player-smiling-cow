@@ -39,7 +39,7 @@ class Player:
         pass
 
     def straight(self, cards):
-        ranks = set(cards.keys())
+        ranks = set(lambda x: x['rank'])
 
         if len(ranks) < 5:
             return False
