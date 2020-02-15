@@ -27,7 +27,7 @@ class Player:
                     
             if highest_card_count == 2:
                 return game_state["current_buy_in"] - player['bet'] + game_state['minimum_raise']
-            elif highest_card_count > 2 or flush(cards) or straight(cards):
+            elif highest_card_count > 2 or self.flush(cards) or self.straight(cards):
                 return 1500
 
         except:
