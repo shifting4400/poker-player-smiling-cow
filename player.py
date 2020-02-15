@@ -44,15 +44,10 @@ class Player:
         if len(ranks) < 5:
             return False
 
-        longest_straight = 1
-        for rank in range(1, len(ranks) - 1):
-            if rank + 1 in ranks:
-                longest_straight += 1
-            else:
-                longest_straight = 1
-
-        if longest_straight >= 5:
-            return True
+        for i in range(1, len(ranks) - 3):
+            for rank in ranks:
+                if rank + 1 in ranks and rank + 2 in ranks and rank + 3 in ranks and rank + 4 in ranks:
+                    return True
 
         return False
     
